@@ -1,0 +1,24 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Apply for free school meals" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Apply for free school meals</h1>
+    <p class="govuk-body">Use this service to apply for free school meals for your child.</p>
+    <p class="govuk-body">You will need:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>your National Insurance number</li>
+      <li>details of any benefits you receive</li>
+      <li>your child's school name</li>
+    </ul>
+    <p class="govuk-body">It takes around <strong>5 minutes</strong> to complete.</p>
+    {{ govukButton({
+      text: "Start now",
+      href: "/receive-benefits",
+      isStartButton: true
+    }) }}
+  </div>
+</div>
+{% endblock %}
