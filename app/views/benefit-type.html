@@ -1,0 +1,47 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Which benefits or tax credits do you receive?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors['benefit-type'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{ text: errors['benefit-type'], href: "#benefit-type" }]
+      }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+    {{ govukRadios({
+      name: "benefit-type",
+      fieldset: {
+        legend: {
+          text: "Which benefits or tax credits do you receive?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Select all that apply to you" },
+      errorMessage: errors['benefit-type'] if errors else null,
+      value: data['benefit-type'],
+      items: [
+        { value: "income-support", text: "Income Support" },
+        { value: "income-based-jobseeker-s-allowance", text: "Income-based Jobseeker's Allowance" },
+        { value: "income-related-employment-and-support-allowance", text: "Income-related Employment and Support Allowance" },
+        { value: "child-tax-credit", text: "Child Tax Credit" },
+        { value: "working-tax-credit", text: "Working Tax Credit" },
+        { value: "universal-credit", text: "Universal Credit" },
+        { value: "other", text: "Other" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
