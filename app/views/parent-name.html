@@ -1,0 +1,37 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What is your full name?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors['parent-name'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{ text: errors['parent-name'], href: "#parent-name" }]
+      }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+    {{ govukInput({
+      id: "parent-name",
+      name: "parent-name",
+      label: {
+        text: "What is your full name?",
+        isPageHeading: true,
+        classes: "govuk-label--l"
+      },
+      hint: { text: "This should match the name on your benefits" },
+      errorMessage: errors['parent-name'] if errors else null,
+      value: data['parent-name']
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
