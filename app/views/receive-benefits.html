@@ -1,0 +1,41 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Do you receive any benefits or tax credits?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors['receive-benefits'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [{ text: errors['receive-benefits'], href: "#receive-benefits" }]
+      }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf }}">
+    {{ govukRadios({
+      name: "receive-benefits",
+      fieldset: {
+        legend: {
+          text: "Do you receive any benefits or tax credits?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      errorMessage: errors['receive-benefits'] if errors else null,
+      value: data['receive-benefits'],
+      items: [
+        { value: "yes", text: "Yes" },
+        { value: "no", text: "No" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
